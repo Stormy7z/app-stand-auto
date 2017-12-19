@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".adicionar_carros"
+            android:label="@string/title_activity_adicionar_carros"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
