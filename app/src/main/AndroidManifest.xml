@@ -19,7 +19,8 @@
         <activity
             android:name=".adicionar_carros"
             android:label="@string/title_activity_adicionar_carros"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ver_carro"></activity>
     </application>
 
 </manifest>

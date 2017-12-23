@@ -6,6 +6,7 @@ package com.example.fabio.appstandcarrosv2;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,7 @@ import java.util.List;
 public class AdaptarBasededados {
     private AjudaBasededados dbHelper;
     private SQLiteDatabase database;
-    protected String nome;
-    protected String morada;
-    protected String telefone;
+    protected String marca, modelo;
 
     public AdaptarBasededados(Context context) {
         dbHelper = new AjudaBasededados(context.getApplicationContext());
@@ -41,7 +40,7 @@ public class AdaptarBasededados {
         colunas[8] = "quantidade_donos";
         return database.query("carros", colunas, null, null, null, null, "marca");
     }
-    public long insertNumeroNome(String aMarca, String oModelo, String aMatricula, Integer aCilindrada, Integer oAno, String oCombustivel, Double oPreco, Double osKilometros, Integer aQuantidade_donos ) {
+    public long insertCarro(String aMarca, String oModelo, String aMatricula, Integer aCilindrada, Integer oAno, String oCombustivel, Double oPreco, Double osKilometros, Integer aQuantidade_donos ) {
         ContentValues values = new ContentValues() ;
         values.put("marca", aMarca);
         values.put("modelo", oModelo);
@@ -54,7 +53,40 @@ public class AdaptarBasededados {
         values.put("quantidade_donos", aQuantidade_donos);
         return database.insert("carros", null, values);
     }
-    public List<String> obterTodosValores() {
+    public List<String> obterTodosCarros() {
+        ArrayList<String> carros = new ArrayList<String>();
+        Cursor cursor = obterTodosRegistos();
+        if (cursor.moveToFirst()) {
+            do {
+                carros.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return carros;
+    }
+    public List<String> obterTodosC(int pos) {
+        ArrayList<String> carros = new ArrayList<String>();
+        Cursor cursor = obterTodosRegistos();
+
+        cursor.moveToPosition(pos);
+        carros.add(cursor.getString(0));
+        carros.add(cursor.getString(1));
+        carros.add(cursor.getString(2));
+        carros.add(cursor.getString(3));
+        carros.add(cursor.getString(4));
+        carros.add(cursor.getString(5));
+        carros.add(cursor.getString(6));
+        carros.add(cursor.getString(7));
+        carros.add(cursor.getString(8));
+        cursor.close();
+        return carros;
+    }
+    public long getTotalCarros() {
+        long cnt  = DatabaseUtils.queryNumEntries(database, "carros");
+        //database.close();
+        return cnt;
+    }
+    public String retornaMarca(int n){
         ArrayList<String> nomes = new ArrayList<String>();
         Cursor cursor = obterTodosRegistos();
         if (cursor.moveToFirst()) {
@@ -63,43 +95,20 @@ public class AdaptarBasededados {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return nomes;
+        marca = nomes.get(n);
+        return marca;
     }
-    public String retornaNome(int n){
+    public String retornaModelo(int n){
         ArrayList<String> nomes = new ArrayList<String>();
         Cursor cursor = obterTodosRegistos();
         if (cursor.moveToFirst()) {
             do {
-                nomes.add(cursor.getString(0));
+                nomes.add(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         cursor.close();
-        nome = nomes.get(n);
-        return nome;
-    }
-    public String retornaMorada(int n){
-        ArrayList<String> moradas = new ArrayList<String>();
-        Cursor cursor = obterTodosRegistos();
-        if (cursor.moveToFirst()) {
-            do {
-                moradas.add(cursor.getString(1));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        morada = moradas.get(n);
-        return morada;
-    }
-    public String retornaTelefone(int n){
-        ArrayList<String> telefones = new ArrayList<String>();
-        Cursor cursor = obterTodosRegistos();
-        if (cursor.moveToFirst()) {
-            do {
-                telefones.add(cursor.getString(2));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        telefone = telefones.get(n);
-        return telefone;
+        modelo = nomes.get(n);
+        return modelo;
     }
 }
 
