@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AppStandCarrosV2</string>
     <string name="title_activity_adicionar_carros">adicionar_carros</string>
+    <string name="title_activity_get_car">getCar</string>
+    <string name="title_activity_list_item">list_item</string>
+    <string name="title_activity_showlist">showlist</string>
 </resources>

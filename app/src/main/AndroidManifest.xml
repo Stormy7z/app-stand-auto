@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.fabio.appstandcarrosv2">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +23,11 @@
             android:name=".adicionar_carros"
             android:label="@string/title_activity_adicionar_carros"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ver_carro"></activity>
+        <activity android:name=".ver_carro" />
+        <activity
+            android:name=".list_item"
+            android:label="@string/title_activity_list_item"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

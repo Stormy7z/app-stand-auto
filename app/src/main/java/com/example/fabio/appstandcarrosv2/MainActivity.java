@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected AdaptarBasededados a;
     protected String Marca, Modelo;
-    protected Button btn_addcarro;
+    protected Button btn_addcarro, btn_addCarroOnline;
     protected TextView total_stock, marca, modelo;
     List<String> Carros;
     List<String> osCarros;
@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         marca = (TextView)findViewById(R.id.vtxt_marca);
         modelo = (TextView)findViewById(R.id.vtxt_modelo);
         btn_addcarro = (Button)findViewById(R.id.add_carro);
+        btn_addCarroOnline = (Button)findViewById(R.id.btn_addOnline);
         lv=(ListView)findViewById(R.id.listView);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -86,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 executarOutraActivity(adicionar_carros.class, null);
+            }
+        });
+        btn_addCarroOnline.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                executarOutraActivity(list_item.class, null);
             }
         });
     }
