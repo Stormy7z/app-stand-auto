@@ -28,6 +28,11 @@
             android:name=".list_item"
             android:label="@string/title_activity_list_item"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".stock_carro" />
+        <activity android:name=".vista_fornecedor" />
+        <activity android:name=".add_fornecedor" />
+        <activity android:name=".info_fornecedor" />
+        <activity android:name=".faturamento"></activity>
     </application>
 
 </manifest>

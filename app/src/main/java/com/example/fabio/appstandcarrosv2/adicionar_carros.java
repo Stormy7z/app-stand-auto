@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class adicionar_carros extends AppCompatActivity {
     protected Button btn_guarda;
-    protected EditText txt_marca, txt_modelo, txt_matricula, txt_cilindrada, txt_ano, txt_combustivel, txt_preco, txt_kilometros, txt_quantidade_donos;
+    protected EditText txt_marca, txt_modelo, txt_matricula, txt_cilindrada, txt_ano, txt_combustivel, txt_preco, txt_kilometros, txt_preco_compra;
     protected AdaptarBasededados a;
     @Override
     protected void onStart() {
@@ -42,18 +42,20 @@ public class adicionar_carros extends AppCompatActivity {
         txt_combustivel = (EditText)findViewById(R.id.txt_combustivel);
         txt_preco = (EditText)findViewById(R.id.txt_preco);
         txt_kilometros = (EditText)findViewById(R.id.txt_kilometros);
-        txt_quantidade_donos = (EditText)findViewById(R.id.txt_quantidade_donos);
+        txt_preco_compra = (EditText)findViewById(R.id.txt_preco_compra);
 
 
         btn_guarda.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 long rowInserted = a.insertCarro(txt_marca.getText().toString(), txt_modelo.getText().toString(), txt_matricula.getText().toString(),
                         Integer.parseInt(txt_cilindrada.getText().toString()), Integer.parseInt(txt_ano.getText().toString()), txt_combustivel.getText().toString(), Double.parseDouble(txt_preco.getText().toString()),
-                        Double.parseDouble(txt_kilometros.getText().toString()), Integer.parseInt(txt_quantidade_donos.getText().toString()));
+                        Double.parseDouble(txt_kilometros.getText().toString()), Double.parseDouble(txt_preco_compra.getText().toString()));
                 if(rowInserted != -1)
                     Toast.makeText(getApplicationContext() , "Carro adicionado, linha id: " + rowInserted, Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getApplicationContext() , "Erro", Toast.LENGTH_SHORT).show();
+
+                finish();
             }
         });
     }
