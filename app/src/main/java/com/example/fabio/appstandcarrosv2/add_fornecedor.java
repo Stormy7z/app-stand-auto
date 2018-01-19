@@ -15,19 +15,20 @@ public class add_fornecedor extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "Add fornec onStart()", Toast.LENGTH_SHORT).show();
-        a = new AdaptarBasededados(this).open();
+        try {
+            a = new AdaptarBasededados(this).open();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "Add fornec onPause()", Toast.LENGTH_SHORT).show();
     }
     @Override
 
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "Add fornec onStop()", Toast.LENGTH_SHORT).show();
-        a.close();
+        try {
+            a.close();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +43,21 @@ public class add_fornecedor extends AppCompatActivity {
 
         btn_guarda.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                long rowInserted = a.insertFornecedor(txt_nome.getText().toString(), txt_numerotlm.getText().toString(), txt_morada.getText().toString(), txt_descricao.getText().toString());
-                if(rowInserted != -1)
-                    Toast.makeText(getApplicationContext() , "Fornecedor adicionado, linha id: " + rowInserted, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext() , "Erro", Toast.LENGTH_SHORT).show();
-
-                finish();
+                //guardar fornecedor na bf
+                try {
+                    long rowInserted = a.insertFornecedor(txt_nome.getText().toString(), txt_numerotlm.getText().toString(), txt_morada.getText().toString(), txt_descricao.getText().toString());
+                    if (rowInserted != -1)
+                        Toast.makeText(getApplicationContext(), "Fornecedor adicionado", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_SHORT).show();
+                    finish();
+                }catch(NullPointerException e){
+                    Toast.makeText(getApplicationContext() , "Valores Errados", Toast.LENGTH_SHORT).show();}
+                catch(NumberFormatException e){
+                    Toast.makeText(getApplicationContext() , "Escrever Formato Correto", Toast.LENGTH_SHORT).show();
+                }catch(IndexOutOfBoundsException e){
+                    Toast.makeText(getApplicationContext() , "Número de Carateres excedido", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -28,16 +28,17 @@ public class AdaptarBasededados {
         dbHelper.close();
     }
     private Cursor obterTodosRegistos() {
-        String[] colunas = new String[9];
-        colunas[0] = "marca";
-        colunas[1] = "modelo";
-        colunas[2] = "matricula";
-        colunas[3] = "cilindrada";
-        colunas[4] = "ano";
-        colunas[5] = "combustivel";
-        colunas[6] = "preco";
-        colunas[7] = "kilometros";
-        colunas[8] = "preco_compra";
+        String[] colunas = new String[10];
+        colunas[0] = "_id";
+        colunas[1] = "marca";
+        colunas[2] = "modelo";
+        colunas[3] = "matricula";
+        colunas[4] = "cilindrada";
+        colunas[5] = "ano";
+        colunas[6] = "combustivel";
+        colunas[7] = "preco";
+        colunas[8] = "kilometros";
+        colunas[9] = "preco_compra";
         return database.query("carros", colunas, null, null, null, null, "_id");
     }
 
@@ -59,7 +60,7 @@ public class AdaptarBasededados {
         Cursor cursor = obterTodosRegistos();
         if (cursor.moveToFirst()) {
             do {
-                carros.add(cursor.getString(0));
+                carros.add(cursor.getString(1));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -79,12 +80,12 @@ public class AdaptarBasededados {
         carros.add(cursor.getString(6));
         carros.add(cursor.getString(7));
         carros.add(cursor.getString(8));
+        carros.add(cursor.getString(9));
         cursor.close();
         return carros;
     }
     public long getTotalCarros() {
         long cnt  = DatabaseUtils.queryNumEntries(database, "carros");
-        //database.close();
         return cnt;
     }
     public String retornaMarca(int n){
@@ -111,11 +112,10 @@ public class AdaptarBasededados {
         modelo = nomes.get(n);
         return modelo;
     }
-    public int updateC(String aMarca, String oModelo, String aMatricula, Integer aCilindrada, Integer oAno, String oCombustivel, Double oPreco, Double osKilometros, Double oPreco_compra) {
-        String whereClause = "matricula = ?";
+    public int updateC(Integer oId, String aMarca, String oModelo, String aMatricula, Integer aCilindrada, Integer oAno, String oCombustivel, Double oPreco, Double osKilometros, Double oPreco_compra) {
+        String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
-        whereArgs[0] = new String(aMatricula);
-        //whereArgs[0] = new Integer(oId).toString();
+        whereArgs[0] = new Integer(oId).toString();
         ContentValues values = new ContentValues();
         values.put("marca", aMarca);
         values.put("modelo", oModelo);
@@ -128,20 +128,21 @@ public class AdaptarBasededados {
         values.put("preco_compra", oPreco_compra);
         return database.update("carros", values, whereClause, whereArgs);
     }
-    public int deleteC(Integer oId) {
+    public int deleteC(Integer oID) {
         String whereClause = "_id = ?";
         String[] whereArgs = new String[1];
-        whereArgs[0] = new Integer(oId).toString();
+        whereArgs[0] = new Integer(oID).toString();
         return database.delete("carros", whereClause, whereArgs);
     }
     //Fornecedores
     private Cursor TodosFornecedores() {
-        String[] colunas = new String[4];
-        colunas[0] = "nome";
-        colunas[1] = "numero_tlm";
-        colunas[2] = "morada";
-        colunas[3] = "descricao";
-        return database.query("fornecedores", colunas, null, null, null, null, "_id");
+        String[] colunas = new String[5];
+        colunas[0] = "_id";
+        colunas[1] = "nome";
+        colunas[2] = "numero_tlm";
+        colunas[3] = "morada";
+        colunas[4] = "descricao";
+        return database.query("fornecedores", colunas, null, null, null, null, "nome");
     }
     public long insertFornecedor(String oNome, String oNumero_tlm, String aMorada, String aDescricao) {
         ContentValues values = new ContentValues() ;
@@ -156,7 +157,7 @@ public class AdaptarBasededados {
         Cursor curs = TodosFornecedores();
         if (curs.moveToFirst()) {
             do {
-                fornec.add(curs.getString(0));
+                fornec.add(curs.getString(1));
             } while (curs.moveToNext());
         }
         curs.close();
@@ -165,12 +166,12 @@ public class AdaptarBasededados {
     public List<String> obterTodosF(int pos) {
         ArrayList<String> fornec = new ArrayList<String>();
         Cursor cursor = TodosFornecedores();
-
         cursor.moveToPosition(pos);
         fornec.add(cursor.getString(0));
         fornec.add(cursor.getString(1));
         fornec.add(cursor.getString(2));
         fornec.add(cursor.getString(3));
+        fornec.add(cursor.getString(4));
         cursor.close();
         return fornec;
     }
@@ -183,8 +184,6 @@ public class AdaptarBasededados {
         values.put("numero_tlm", aNumero);
         values.put("morada", aMorada);
         values.put("descricao", aDesccricao);
-
-
         return database.update("fornecedores", values, whereClause, whereArgs);
     }
     public int deleteF(Integer oId) {
@@ -195,24 +194,15 @@ public class AdaptarBasededados {
     }
 
     //Faturamento
-    private Cursor obterTodosFaturamento() {
-        String[] colunas = new String[3];
-        colunas[0] = "valor_stock";
-        colunas[1] = "valor_vendas";
-        colunas[2] = "saldo";
-        return database.query("faturamento", colunas, null, null, null, null, "_id");
+    public long insertVenda(String aMatricula, Double oValor_vendas, Integer oMes, Integer oAno) {
+        ContentValues values = new ContentValues() ;
+        values.put("matricula", aMatricula);
+        values.put("valor_vendas", oValor_vendas);
+        values.put("mes", oMes);
+        values.put("ano", oAno);
+        return database.insert("faturamento", null, values);
     }
 
-    public long insertStock(Double oValor_stock) {
-        ContentValues values = new ContentValues() ;
-        values.put("valor_stock", oValor_stock);
-        return database.insert("faturamento", null, values);
-    }
-    public long insertVenda(Double oValor_vendas) {
-        ContentValues values = new ContentValues() ;
-        values.put("valor_vendas", oValor_vendas);
-        return database.insert("faturamento", null, values);
-    }
     public double retornaVendas() {
         //String q = "SELECT SUM(valor_vendas) FROM faturamento";
         //Cursor mCursor = database.rawQuery(q, null);
@@ -228,18 +218,21 @@ public class AdaptarBasededados {
         double res = c.getDouble(0);
         return res;
     }
-    public List<String> obterTodosFatur(int pos) {
-        ArrayList<String> faturamento = new ArrayList<String>();
-        Cursor cursor = obterTodosFaturamento();
-
-        cursor.moveToPosition(pos);
-        faturamento.add(cursor.getString(0));
-        faturamento.add(cursor.getString(1));
-        faturamento.add(cursor.getString(2));
-        cursor.close();
-        return faturamento;
+    public double retornaStock() {
+        String query = "SUM(preco) ";
+        String[] otherColumns = new String[]{ query};
+        Cursor c = database.query("carros", otherColumns, null, null, null, null, null);
+        c.moveToFirst();
+        double res = c.getDouble(0);
+        return res;
     }
-
+    public double retornaVendaAnoMes(int oAno, int oMes) {
+        String mQuery = "SELECT SUM(valor_vendas) FROM faturamento WHERE ano = "+oAno+" and mes = "+oMes;
+        Cursor c = database.rawQuery(mQuery, new String[]{});
+        c.moveToFirst();
+        double res = c.getDouble(0);
+        return res;
+    }
 
 }
 

@@ -8,7 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,52 +29,50 @@ public class vista_fornecedor extends AppCompatActivity {
         x.putExtra("posicao", pos);
         startActivity(x);
     }
-
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "fornec onStart()", Toast.LENGTH_SHORT).show();
         //mete fornecedores na lista
-        a = new AdaptarBasededados(this).open();
-        Fornecedores = a.obterTodosFornecedores();
-        if(Fornecedores != null){
-            //adicionar ao listview
-            lv = (ListView) findViewById(R.id.listView);
-            ArrayList<String> osFornc = new ArrayList<String>();
-            osFornc.addAll(Fornecedores);
-            listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Fornecedores);
-            lv.setAdapter(listAdapter);
-        }
+        try{
+            a = new AdaptarBasededados(this).open();
+            Fornecedores = a.obterTodosFornecedores();
+            if(Fornecedores != null){
+                //adicionar ao listview
+                ArrayList<String> osFornc = new ArrayList<String>();
+                osFornc.addAll(Fornecedores);
+                listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Fornecedores);
+                lv.setAdapter(listAdapter);
+            }
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
-
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "fornec onPause()", Toast.LENGTH_SHORT).show();
     }
-
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "fornec onStop()", Toast.LENGTH_SHORT).show();
-        a.close();
+        try {
+            a.close();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_fornecedor);
-
         add_fornecedor = (Button) findViewById(R.id.add_fornecedor);
         lv = (ListView) findViewById(R.id.listView);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                posicao = position;
-                osFornec = a.obterTodosF(position);
-                executarOutraActivity(info_fornecedor.class, (ArrayList)osFornec, posicao);
+                try {
+                    posicao = position;
+                    osFornec = a.obterTodosF(position);
+                    executarOutraActivity(info_fornecedor.class, (ArrayList) osFornec, posicao);
+                }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
             }
         });
-
         add_fornecedor.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {

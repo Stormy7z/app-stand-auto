@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AjudaBasededados extends SQLiteOpenHelper{
     private static final String DATABASE_NAME = "base-dados.db";
-    private static final int VERSION = 5;
+    private static final int VERSION = 12;
     public AjudaBasededados(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
@@ -24,7 +24,7 @@ public class AjudaBasededados extends SQLiteOpenHelper{
                 "CREATE TABLE fornecedores(_id integer primary key autoincrement, nome varchar(50), numero_tlm varchar(50), morada varchar(50), descricao varchar(200))";
         db.execSQL(f);
         String s =
-                "CREATE TABLE faturamento(_id integer primary key autoincrement, valor_stock double(200), valor_vendas double(200), saldo double(200))";
+                "CREATE TABLE faturamento(_id integer primary key autoincrement, matricula varchar(50), valor_vendas double(200), mes int(50), ano int(50))";
         db.execSQL(s);
     }
     @Override

@@ -22,17 +22,25 @@
         <activity
             android:name=".adicionar_carros"
             android:label="@string/title_activity_adicionar_carros"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ver_carro" />
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ver_carro"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".list_item"
-            android:label="@string/title_activity_list_item"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".stock_carro" />
-        <activity android:name=".vista_fornecedor" />
-        <activity android:name=".add_fornecedor" />
-        <activity android:name=".info_fornecedor" />
-        <activity android:name=".faturamento"></activity>
+            android:label="@string/title_activity_list_item"/>
+        <activity android:name=".stock_carro"
+            android:label="@string/title_activity_stock_carro"/>
+        <activity android:name=".vista_fornecedor"
+            android:label="@string/title_activity_vista_fornecedor"/>
+        <activity android:name=".add_fornecedor"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".info_fornecedor"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".faturamento"
+            android:label="@string/title_activity_faturamento"/>
+        <activity android:name=".vender_popup"
+            android:theme="@style/AppTheme.CustomTheme">
+        </activity>
     </application>
 
 </manifest>

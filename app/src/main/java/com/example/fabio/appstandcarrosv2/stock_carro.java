@@ -18,7 +18,7 @@ public class stock_carro extends AppCompatActivity {
     protected AdaptarBasededados a;
     protected String Marca, Modelo;
     protected Button btn_addcarro;
-    protected TextView total_stock, marca, modelo;
+    protected TextView total_stock;
     List<String> Carros;
     List<String> osCarros;
     protected ListView lv;
@@ -34,57 +34,55 @@ public class stock_carro extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "stock_carro onStart()", Toast.LENGTH_SHORT).show();
-        a = new AdaptarBasededados(this).open();
-        //mostra total carros
-        long tot_stock = a.getTotalCarros();
-        total_stock = (TextView)findViewById(R.id.total_stock);
-        total_stock.setText(Long.toString(tot_stock));
+        try {
+            a = new AdaptarBasededados(this).open();
+            //mostra total carros
+            long tot_stock = a.getTotalCarros();
+            total_stock = (TextView) findViewById(R.id.total_stock);
+            total_stock.setText(Long.toString(tot_stock));
 
-        Carros = a.obterTodosCarros();
-        //adicionar ao listview
-        lv=(ListView)findViewById(R.id.listView);
-        ArrayList<String> osCar = new ArrayList<String>();
-        osCar.addAll(Carros);
-        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Carros);
-        lv.setAdapter(listAdapter);
+            Carros = a.obterTodosCarros();
+            //adicionar ao listview
+            lv = (ListView) findViewById(R.id.listView);
+            ArrayList<String> osCar = new ArrayList<String>();
+            osCar.addAll(Carros);
+            listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Carros);
+            lv.setAdapter(listAdapter);
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
 
     }
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "stock_carro onPause()", Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "stock_carro onStop()", Toast.LENGTH_SHORT).show();
-        a.close();
+        try {
+            a.close();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_carro);
-
-        marca = (TextView)findViewById(R.id.vtxt_marca);
-        modelo = (TextView)findViewById(R.id.vtxt_modelo);
         btn_addcarro = (Button)findViewById(R.id.add_carro);
         lv=(ListView)findViewById(R.id.listView);
 
+        //popular listview com carros
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Marca = a.retornaMarca(position);
-                Modelo = a.retornaModelo(position);
-                marca.setText(Marca);
-                modelo.setText(Modelo);
-
-                //set val to other activity
-                posicao = position;
-                osCarros = a.obterTodosC(position);
-                executarOutraActivity(ver_carro.class, (ArrayList)osCarros, posicao);
+                try {
+                    Marca = a.retornaMarca(position);
+                    Modelo = a.retornaModelo(position);
+                    //set val to other activity
+                    posicao = position;
+                    osCarros = a.obterTodosC(position);
+                    executarOutraActivity(ver_carro.class, (ArrayList) osCarros, posicao);
+                }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
             }
         });
-
+        //ir para adicionar carro
         btn_addcarro.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {

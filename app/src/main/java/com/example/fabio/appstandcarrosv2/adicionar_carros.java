@@ -14,19 +14,20 @@ public class adicionar_carros extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this, "MainActivity onStart()", Toast.LENGTH_SHORT).show();
-        a = new AdaptarBasededados(this).open();
+        try {
+            a = new AdaptarBasededados(this).open();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "MainActivity onPause()", Toast.LENGTH_SHORT).show();
     }
     @Override
 
     protected void onStop() {
         super.onStop();
-        Toast.makeText(this, "MainActivity onStop()", Toast.LENGTH_SHORT).show();
-        a.close();
+        try {
+            a.close();
+        }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +45,26 @@ public class adicionar_carros extends AppCompatActivity {
         txt_kilometros = (EditText)findViewById(R.id.txt_kilometros);
         txt_preco_compra = (EditText)findViewById(R.id.txt_preco_compra);
 
-
+        //guardar carro
         btn_guarda.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                long rowInserted = a.insertCarro(txt_marca.getText().toString(), txt_modelo.getText().toString(), txt_matricula.getText().toString(),
-                        Integer.parseInt(txt_cilindrada.getText().toString()), Integer.parseInt(txt_ano.getText().toString()), txt_combustivel.getText().toString(), Double.parseDouble(txt_preco.getText().toString()),
-                        Double.parseDouble(txt_kilometros.getText().toString()), Double.parseDouble(txt_preco_compra.getText().toString()));
-                if(rowInserted != -1)
-                    Toast.makeText(getApplicationContext() , "Carro adicionado, linha id: " + rowInserted, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext() , "Erro", Toast.LENGTH_SHORT).show();
+                try {
+                    long rowInserted = a.insertCarro(txt_marca.getText().toString(), txt_modelo.getText().toString(), txt_matricula.getText().toString(),
+                            Integer.parseInt(txt_cilindrada.getText().toString()), Integer.parseInt(txt_ano.getText().toString()), txt_combustivel.getText().toString(), Double.parseDouble(txt_preco.getText().toString()),
+                            Double.parseDouble(txt_kilometros.getText().toString()), Double.parseDouble(txt_preco_compra.getText().toString()));
+                    if (rowInserted != -1)
+                        Toast.makeText(getApplicationContext(), "Carro adicionado ao stock", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_SHORT).show();
 
-                finish();
+                    finish();
+                }catch(NullPointerException e){
+                    Toast.makeText(getApplicationContext() , "Valores Errados", Toast.LENGTH_SHORT).show();}
+                catch(NumberFormatException e){
+                    Toast.makeText(getApplicationContext() , "Escrever formato correto nos campos indicados", Toast.LENGTH_SHORT).show();
+                }catch(IndexOutOfBoundsException e){
+                    Toast.makeText(getApplicationContext() , "Número de Carateres excedido", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

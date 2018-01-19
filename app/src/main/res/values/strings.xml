@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">AppStandCarrosV2</string>
+    <string name="app_name">Gestão de Stock Carros</string>
     <string name="title_activity_adicionar_carros">adicionar_carros</string>
-    <string name="title_activity_get_car">getCar</string>
-    <string name="title_activity_list_item">list_item</string>
+    <string name="title_activity_vista_fornecedor">Fornecedores</string>
+    <string name="title_activity_list_item">Fornecedores para Revenda</string>
     <string name="title_activity_showlist">showlist</string>
+    <string name="title_activity_faturamento">Faturamento</string>
+    <string name="title_activity_stock_carro">Stock de Carros</string>
+
 </resources>
