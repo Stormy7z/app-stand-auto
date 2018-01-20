@@ -12,35 +12,43 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".adicionar_carros"
             android:label="@string/title_activity_adicionar_carros"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ver_carro"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ver_carro"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".list_item"
-            android:label="@string/title_activity_list_item"/>
-        <activity android:name=".stock_carro"
-            android:label="@string/title_activity_stock_carro"/>
-        <activity android:name=".vista_fornecedor"
-            android:label="@string/title_activity_vista_fornecedor"/>
-        <activity android:name=".add_fornecedor"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".info_fornecedor"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".faturamento"
-            android:label="@string/title_activity_faturamento"/>
-        <activity android:name=".vender_popup"
-            android:theme="@style/AppTheme.CustomTheme">
-        </activity>
+            android:label="@string/title_activity_list_item" />
+        <activity
+            android:name=".stock_carro"
+            android:label="@string/title_activity_stock_carro" />
+        <activity
+            android:name=".vista_fornecedor"
+            android:label="@string/title_activity_vista_fornecedor" />
+        <activity
+            android:name=".add_fornecedor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".info_fornecedor"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".faturamento"
+            android:label="@string/title_activity_faturamento" />
+        <activity
+            android:name=".vender_popup"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
 
 </manifest>

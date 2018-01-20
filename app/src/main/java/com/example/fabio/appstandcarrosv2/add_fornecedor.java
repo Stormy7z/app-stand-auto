@@ -47,7 +47,7 @@ public class add_fornecedor extends AppCompatActivity {
                 try {
                     long rowInserted = a.insertFornecedor(txt_nome.getText().toString(), txt_numerotlm.getText().toString(), txt_morada.getText().toString(), txt_descricao.getText().toString());
                     if (rowInserted != -1)
-                        Toast.makeText(getApplicationContext(), "Fornecedor adicionado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Fornecedor Adicionado", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_SHORT).show();
                     finish();

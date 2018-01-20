@@ -31,25 +31,22 @@ public class list_item extends AppCompatActivity {
     private String morada;
     private final String[] marcas = {"aston","bmw", "honda","maserati", "toyota", "mercedes", "ford", "nissan", "gm",
             "renault", "volkswagen", "volvo", "fiat", "mazda", "suzuki", "mitsubishi"};
-    List<String> asMoradas;
-    Spinner sp1;
-    String aMarca;
+    protected List<String> asMoradas;
+    protected Spinner sp1;
+    protected String aMarca;
     private String url;
-    ArrayList<HashMap<String, String>> itemList;
+    protected ArrayList<HashMap<String, String>> itemList;
 
     @Override
     protected void onStart() {
         super.onStart();
-        //Toast.makeText(this, "MainActivity onStart()", Toast.LENGTH_SHORT).show();
     }
     protected void onPause() {
         super.onPause();
-        //Toast.makeText(this, "MainActivity onPause()", Toast.LENGTH_SHORT).show();
     }
     @Override
     protected void onStop() {
         super.onStop();
-        //Toast.makeText(this, "MainActivity onStop()", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -114,7 +111,7 @@ public class list_item extends AppCompatActivity {
                         String name = c.getString("Mfr_Name");
                         String address = c.getString("Address");
                         HashMap<String, String> item = new HashMap<>();
-                        //add child nodes to hashmap
+                        //adiciona child nodes ao hashmap
                         item.put("Mfr_Name", name);
                         item.put("Address", address);
                         asMoradas.add(address);
@@ -135,7 +132,7 @@ public class list_item extends AppCompatActivity {
                     @Override
                     public void run(){
                         Toast.makeText(list_item.this,
-                                "Sem resposta do servidorS ",
+                                "Sem resposta do servidor",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -154,7 +151,7 @@ public class list_item extends AppCompatActivity {
             ListAdapter adapter = new SimpleAdapter(
                     list_item.this, itemList,
                     R.layout.activity_list_item, new String[]{"Mfr_Name", "Address"},
-                    new int[]{R.id.mfr_Name, R.id.address});
+                    new int[]{R.id.txt1, R.id.txt2});
             lv.setAdapter(adapter);
         }
     }

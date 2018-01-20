@@ -1,6 +1,5 @@
 package com.example.fabio.appstandcarrosv2;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 
 public class faturamento extends AppCompatActivity {
 
-    protected TextView txt_valor_stock, txt_valor_vendas, txt_saldo, txt_sum_vendas_mes;
+    protected TextView txt_valor_stock, txt_valor_vendas, txt_saldo, txt_sum_vendas_mes, txt_investimento;
     protected EditText etxt_despesas, etxt_Ano;
     protected Button btn_1, btn_saldo;
     protected AdaptarBasededados a;
@@ -21,21 +20,24 @@ public class faturamento extends AppCompatActivity {
     protected Spinner spinner_mes;
     protected final String[] meses = {"", "Janeiro","Fevereiro", "Março","Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro",
             "Outubro", "Novembro", "Dezembro"};
+    protected Double valstock, investimento, valvendas;
 
-    private void executarOutraActivity(Class<?> subActividade) {
-        Intent x = new Intent(this, subActividade);
-        startActivity(x);
-    }
     @Override
     protected void onStart() {
         super.onStart();
         a = new AdaptarBasededados(this).open();
         //sum stock e vendas
         try {
-            Double valvendas = a.retornaVendas();
-            txt_valor_vendas.setText(valvendas + " €");
-            Double valstock = a.retornaStock();
+            //valor stock
+            valstock = a.retornaStock();
             txt_valor_stock.setText(valstock + " €");
+            //valor vendas
+            valvendas = a.retornaVendas();
+            txt_valor_vendas.setText(valvendas + " €");
+            //valor investimento
+            investimento = a.retornaInvestimentoStock();
+            txt_investimento.setText(investimento + " €");
+            //Diferença entre Investimento e Vendas
         }catch(NullPointerException e){}catch(IndexOutOfBoundsException e){}
     }
     protected void onPause() {
@@ -51,6 +53,7 @@ public class faturamento extends AppCompatActivity {
         setContentView(R.layout.activity_faturamento);
         txt_valor_stock = (TextView)findViewById(R.id.txt_valor_stock);
         txt_valor_vendas = (TextView)findViewById(R.id.txt_valor_vendas);
+        txt_investimento = (TextView)findViewById(R.id.txt_investimento);
         txt_saldo = (TextView)findViewById(R.id.txt_saldo);
         btn_1 = (Button)findViewById(R.id.btn_1);
         etxt_despesas = (EditText)findViewById(R.id.etxt_despesas);

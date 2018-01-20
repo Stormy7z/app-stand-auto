@@ -62,7 +62,7 @@ public class info_fornecedor extends AppCompatActivity {
                 try {
                     pos = Integer.parseInt(osFornec.get(0));
                     a.updateF(pos, nome.getText().toString(), numerotlm.getText().toString(), morada.getText().toString(), descricao.getText().toString());
-                    Toast.makeText(getApplicationContext(), "Valores Alterados", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Fornecedor Atualizado", Toast.LENGTH_SHORT).show();
                     finish();
                 }catch(NullPointerException e){
                     Toast.makeText(getApplicationContext() , "Valores Errados", Toast.LENGTH_SHORT).show();}

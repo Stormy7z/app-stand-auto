@@ -53,7 +53,7 @@ public class adicionar_carros extends AppCompatActivity {
                             Integer.parseInt(txt_cilindrada.getText().toString()), Integer.parseInt(txt_ano.getText().toString()), txt_combustivel.getText().toString(), Double.parseDouble(txt_preco.getText().toString()),
                             Double.parseDouble(txt_kilometros.getText().toString()), Double.parseDouble(txt_preco_compra.getText().toString()));
                     if (rowInserted != -1)
-                        Toast.makeText(getApplicationContext(), "Carro adicionado ao stock", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Carro adicionado ao Stock", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(getApplicationContext(), "Erro", Toast.LENGTH_SHORT).show();
 

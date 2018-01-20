@@ -66,6 +66,28 @@ public class AdaptarBasededados {
         cursor.close();
         return carros;
     }
+    public List<String> obterTodosModelos() {
+        ArrayList<String> modelos = new ArrayList<String>();
+        Cursor cursor = obterTodosRegistos();
+        if (cursor.moveToFirst()) {
+            do {
+                modelos.add(cursor.getString(2));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return modelos;
+    }
+    public List<String> obterTodasMatriculas() {
+        ArrayList<String> matriculas = new ArrayList<String>();
+        Cursor cursor = obterTodosRegistos();
+        if (cursor.moveToFirst()) {
+            do {
+                matriculas.add(cursor.getString(3));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return matriculas;
+    }
     public List<String> obterTodosC(int pos) {
         ArrayList<String> carros = new ArrayList<String>();
         Cursor cursor = obterTodosRegistos();
@@ -204,15 +226,8 @@ public class AdaptarBasededados {
     }
 
     public double retornaVendas() {
-        //String q = "SELECT SUM(valor_vendas) FROM faturamento";
-        //Cursor mCursor = database.rawQuery(q, null);
-        //Cursor c = database.rawQuery("SELECT SUM(valor_vendas) FROM faturamento",null);
-        //if (c != null){
-        //    c.moveToFirst();
-        //}
         String query = "SUM(valor_vendas) ";
         String[] otherColumns = new String[]{ query};
-        String otherResult = "";
         Cursor c = database.query("faturamento", otherColumns, null, null, null, null, null);
         c.moveToFirst();
         double res = c.getDouble(0);
@@ -227,12 +242,19 @@ public class AdaptarBasededados {
         return res;
     }
     public double retornaVendaAnoMes(int oAno, int oMes) {
-        String mQuery = "SELECT SUM(valor_vendas) FROM faturamento WHERE ano = "+oAno+" and mes = "+oMes;
-        Cursor c = database.rawQuery(mQuery, new String[]{});
+        String query = "SELECT SUM(valor_vendas) FROM faturamento WHERE ano = "+oAno+" and mes = "+oMes;
+        Cursor c = database.rawQuery(query, new String[]{});
         c.moveToFirst();
         double res = c.getDouble(0);
         return res;
     }
-
+    public double retornaInvestimentoStock() {
+        String query = "SUM(preco_compra) ";
+        String[] otherColumns = new String[]{ query};
+        Cursor c = database.query("carros", otherColumns, null, null, null, null, null);
+        c.moveToFirst();
+        double res = c.getDouble(0);
+        return res;
+    }
 }
 

@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class stock_carro extends AppCompatActivity {
@@ -19,11 +23,11 @@ public class stock_carro extends AppCompatActivity {
     protected String Marca, Modelo;
     protected Button btn_addcarro;
     protected TextView total_stock;
-    List<String> Carros;
-    List<String> osCarros;
+    protected List<String> Carros, osModelo, asMatriculas;
+    protected List<String> osCarros;
     protected ListView lv;
     protected Integer posicao;
-    protected ArrayAdapter<String> listAdapter ;
+    protected ArrayList<HashMap<String, String>> osCar;
 
     private void executarOutraActivity(Class<?> subActividade, ArrayList<String> val, Integer pos) {
         Intent x = new Intent(this, subActividade);
@@ -36,18 +40,26 @@ public class stock_carro extends AppCompatActivity {
         super.onStart();
         try {
             a = new AdaptarBasededados(this).open();
+            osCar = new ArrayList<>();
             //mostra total carros
             long tot_stock = a.getTotalCarros();
             total_stock = (TextView) findViewById(R.id.total_stock);
-            total_stock.setText(Long.toString(tot_stock));
-
-            Carros = a.obterTodosCarros();
-            //adicionar ao listview
             lv = (ListView) findViewById(R.id.listView);
-            ArrayList<String> osCar = new ArrayList<String>();
-            osCar.addAll(Carros);
-            listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Carros);
-            lv.setAdapter(listAdapter);
+            total_stock.setText(Long.toString(tot_stock));
+            //obter os val de cada linha
+            Carros = a.obterTodosCarros();osModelo = a.obterTodosModelos();asMatriculas = a.obterTodasMatriculas();
+            for (int i = 0; i < Carros.size(); i++){
+                //adicionar items para por em cada linha do listview
+                HashMap<String, String> infoCarros = new HashMap<>();
+                    infoCarros.put("linha_marca", "Marca: " + Carros.get(i)+"   |   Modelo: "+osModelo.get(i));
+                    infoCarros.put("linha_modelo", "Matrícula: "+asMatriculas.get(i));
+                    osCar.add(infoCarros);
+            }
+            //adicionar ao listview
+            ListAdapter adapter = new SimpleAdapter(this,
+                    osCar, R.layout.activity_list_item, new String[]{"linha_marca", "linha_modelo"},
+                    new int[]{R.id.txt1, R.id.txt2});
+            lv.setAdapter(adapter);
         }catch(NullPointerException e){}catch(NumberFormatException e){}catch(IndexOutOfBoundsException e){}
 
     }
